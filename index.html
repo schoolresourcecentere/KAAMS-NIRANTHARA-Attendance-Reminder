@@ -1,0 +1,574 @@
+
+
+<!-- ===== KAMS ಹಾಜರಾತಿ ಅಲಾರಾಂ : START ===== -->
+<div id="kams-alarm">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600;700;800&family=Noto+Sans+Kannada:wght@400;500;600&display=swap');
+#kams-alarm{--p:#5a3fd3;--pl:#e9e4fb;--bg:#f4f1fb;--tx:#1f1a33;--mut:#7b7790;--gr:#43a047;--grl:#a5d6a7;--or:#ef6c00;
+  --hf:'Baloo Tamma 2','Noto Sans Kannada','Nirmala UI',sans-serif;
+  max-width:520px;margin:0 auto;background:var(--bg);color:var(--tx);font-family:'Noto Sans Kannada','Nirmala UI','Tunga',system-ui,sans-serif;
+  font-size:15px;line-height:1.45;border-radius:18px;overflow:hidden;position:relative;text-align:left}
+#kams-alarm *{box-sizing:border-box}
+#kams-alarm [hidden]{display:none!important}
+#kams-alarm svg{width:1em;height:1em;fill:currentColor;display:block;flex:none}
+#kams-alarm button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;font-size:inherit;padding:0}
+#kams-alarm h2,#kams-alarm h3,#kams-alarm p{margin:0;padding:0}
+#kams-alarm .ka-head{background:var(--p);color:#fff;display:flex;align-items:center;gap:12px;padding:16px 18px}
+#kams-alarm .ka-head>svg{font-size:40px}
+#kams-alarm .ka-head h2{font-family:var(--hf);font-size:25px;font-weight:800;color:#fff;line-height:1.15}
+#kams-alarm .ka-head small{opacity:.8;font-size:13px}
+#kams-alarm .ka-hbtn{margin-left:auto;font-size:30px;color:#fff}
+#kams-alarm .ka-body{padding:16px 14px 26px}
+#kams-alarm .ka-card{background:#fff;border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(60,40,140,.07)}
+#kams-alarm .ka-unlock{display:block;width:100%;background:#fff3cd;border:1.5px solid #f2cf63;color:#6b4e00;border-radius:16px;padding:12px;margin-bottom:12px;font-weight:600;text-align:center}
+#kams-alarm .ka-hero{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#f7f4ff,#e6dffb);border:2px solid #fff}
+#kams-alarm .ka-hero h3{font-family:var(--hf);font-size:25px;font-weight:800;line-height:1.2}
+#kams-alarm .ka-hero b{font-family:var(--hf);font-size:18px;display:block}
+#kams-alarm .ka-hero small{color:var(--mut)}
+#kams-alarm .ka-hero .ka-hic{margin-left:auto;background:#fff;border-radius:20px;width:76px;height:76px;display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--p);flex:none}
+#kams-alarm .ka-clock{background:var(--p);color:#fff;text-align:center}
+#kams-alarm .ka-now{font-size:38px;font-weight:700;font-family:var(--hf);line-height:1.1;letter-spacing:.5px}
+#kams-alarm .ka-date{opacity:.85;font-size:13px;margin-bottom:10px}
+#kams-alarm .ka-next{background:rgba(255,255,255,.14);border-radius:14px;padding:9px 10px;font-size:14px}
+#kams-alarm .ka-next b{font-size:16px}
+#kams-alarm .ka-prog{margin-top:10px;font-size:13px}
+#kams-alarm .ka-bar{height:8px;border-radius:8px;background:rgba(255,255,255,.25);margin-top:5px;overflow:hidden}
+#kams-alarm .ka-bar i{display:block;height:100%;width:0;background:#8ef0a0;border-radius:8px;transition:width .4s}
+#kams-alarm .ka-sec{display:flex;align-items:center;gap:10px;font-family:var(--hf);font-weight:800;font-size:20px;margin:20px 4px 10px}
+#kams-alarm .ka-sec svg{color:var(--p);font-size:26px}
+#kams-alarm .ka-alarm{display:flex;align-items:center;gap:10px}
+#kams-alarm .ka-alarm.ka-off .ka-ainfo,#kams-alarm .ka-alarm.ka-off .ka-time{opacity:.5}
+#kams-alarm .ka-av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--p);flex:none}
+#kams-alarm .ka-ainfo{flex:1;min-width:0}
+#kams-alarm .ka-ainfo b{display:block;font-size:15.5px;font-weight:600;line-height:1.3}
+#kams-alarm .ka-ainfo small{color:var(--mut);font-size:13px}
+#kams-alarm .ka-done{display:inline-flex;align-items:center;gap:4px;background:#e3f3e6;color:#2e7d32;border-radius:10px;padding:1px 8px;font-size:12px;font-weight:600;margin-top:3px}
+#kams-alarm .ka-time{display:inline-flex;align-items:center;gap:6px;background:var(--pl);color:var(--p);font-weight:700;border-radius:22px;padding:9px 12px;white-space:nowrap;font-size:14.5px;flex:none}
+#kams-alarm .ka-time svg{font-size:18px}
+#kams-alarm .ka-sw{position:relative;width:58px;height:34px;flex:none;display:inline-block}
+#kams-alarm .ka-sw input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+#kams-alarm .ka-sw i{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:20px;background:#e3e1ea;border:2px solid #77747f;transition:.2s}
+#kams-alarm .ka-sw i:after{content:"";position:absolute;top:50%;left:6px;width:16px;height:16px;border-radius:50%;background:#77747f;transform:translateY(-50%);transition:.2s}
+#kams-alarm .ka-sw input:checked+i{background:var(--grl);border-color:var(--grl)}
+#kams-alarm .ka-sw input:checked+i:after{left:27px;width:25px;height:25px;background:var(--gr)}
+#kams-alarm .ka-add{display:flex;width:100%;align-items:center;justify-content:center;gap:6px;border:2px dashed #b9aef0;color:var(--p);border-radius:18px;padding:12px;font-weight:600;margin-bottom:12px}
+#kams-alarm .ka-opt{display:flex;align-items:center;gap:14px;padding:10px 4px;cursor:pointer}
+#kams-alarm .ka-opt+.ka-opt{border-top:1.5px solid #d9d6e3}
+#kams-alarm .ka-opt input{width:22px;height:22px;accent-color:var(--p);margin:0 8px;flex:none}
+#kams-alarm .ka-opt span{flex:1}
+#kams-alarm .ka-opt b{display:block;font-weight:600}
+#kams-alarm .ka-opt small{color:var(--mut)}
+#kams-alarm .ka-opt em{width:50px;height:50px;border-radius:50%;background:var(--pl);color:var(--p);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+#kams-alarm .ka-pv{display:flex;justify-content:flex-end;gap:22px;padding:8px 6px 2px}
+#kams-alarm .ka-pv button{display:inline-flex;align-items:center;gap:6px;color:var(--p);font-weight:600;font-size:15px}
+#kams-alarm .ka-pv svg{font-size:22px}
+#kams-alarm .ka-vol{display:flex;align-items:center;gap:10px}
+#kams-alarm .ka-vol svg{color:var(--p);font-size:26px}
+#kams-alarm .ka-vol b{font-weight:600;white-space:nowrap}
+#kams-alarm .ka-vol input{flex:1;min-width:60px;accent-color:var(--p);height:28px}
+#kams-alarm .ka-vol output{font-weight:700;width:46px;text-align:right}
+#kams-alarm .ka-days{display:flex;flex-wrap:wrap;gap:10px}
+#kams-alarm .ka-day{display:inline-flex;align-items:center;gap:8px;background:#eeecf3;color:#8a879a;border-radius:12px;padding:10px 18px;font-weight:600;font-size:16px}
+#kams-alarm .ka-day svg{visibility:hidden;font-size:18px}
+#kams-alarm .ka-day.on{background:var(--pl);color:#3c3364}
+#kams-alarm .ka-day.on svg{visibility:visible;color:var(--p)}
+#kams-alarm .ka-sun{color:var(--or);font-weight:600;font-size:14px;margin-top:10px}
+#kams-alarm .ka-row{display:flex;align-items:center;gap:10px}
+#kams-alarm .ka-row>svg{font-size:26px}
+#kams-alarm .ka-row b{flex:1;font-weight:700}
+#kams-alarm .ka-row select{font-family:inherit;font-size:14px;padding:6px 8px;border-radius:10px;border:1.5px solid #cfc8ee;background:#fff;color:var(--tx)}
+#kams-alarm .ka-sat{background:#fff6da;border:1.5px solid #f4d675}
+#kams-alarm .ka-sat>.ka-row>svg{color:var(--or)}
+#kams-alarm .ka-satx{border:1.5px solid #d6cff5}
+#kams-alarm .ka-satx>.ka-row>svg{color:var(--p)}
+#kams-alarm .ka-hint{color:var(--mut);font-size:13px;margin-top:6px}
+#kams-alarm .ka-satt{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+#kams-alarm .ka-set .ka-row{padding:9px 0}
+#kams-alarm .ka-set .ka-row+.ka-row{border-top:1px solid #eceaf3}
+#kams-alarm .ka-set .ka-row b{font-weight:500}
+#kams-alarm .ka-btns{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+#kams-alarm .ka-btn{display:block;width:100%;border-radius:16px;padding:13px;font-weight:700;font-size:16px;text-align:center;text-decoration:none;margin-top:10px}
+#kams-alarm .ka-btns .ka-btn{flex:1;margin-top:0;font-size:14.5px;padding:11px}
+#kams-alarm .ka-b-g{background:var(--gr);color:#fff}
+#kams-alarm .ka-b-p{background:var(--p);color:#fff}
+#kams-alarm .ka-b-l{background:var(--pl);color:var(--p)}
+#kams-alarm .ka-b-r{background:#fde7e7;color:#c62828}
+#kams-alarm .ka-b-t{color:var(--mut)}
+#kams-alarm .ka-note{font-size:12.5px;color:var(--mut);text-align:center;margin-top:14px}
+#kams-alarm .ka-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(25,15,70,.6);z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px}
+#kams-alarm .ka-mbox{background:#fff;border-radius:24px;padding:22px;width:100%;max-width:400px;max-height:90vh;overflow:auto}
+#kams-alarm .ka-mbox h3{font-family:var(--hf);font-size:22px;font-weight:800;margin-bottom:10px}
+#kams-alarm .ka-mbox label{display:block;font-size:13px;color:var(--mut);margin-top:10px}
+#kams-alarm .ka-mbox input,#kams-alarm .ka-mbox select{display:block;width:100%;margin-top:4px;font-family:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1.5px solid #cfc8ee;background:#fff;color:var(--tx)}
+#kams-alarm .ka-mbox ul{padding-left:20px;margin:6px 0}
+#kams-alarm .ka-mbox li{margin-bottom:6px}
+#kams-alarm .ka-ringbox{text-align:center}
+#kams-alarm .ka-bell{width:96px;height:96px;border-radius:50%;background:var(--pl);color:var(--p);font-size:52px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;animation:kaShake .8s infinite}
+#kams-alarm .ka-rtime{font-size:34px;font-weight:800;font-family:var(--hf);color:var(--p)}
+#kams-alarm .ka-toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#2b2350;color:#fff;padding:10px 18px;border-radius:22px;font-size:14px;z-index:100000;max-width:90%;text-align:center}
+@keyframes kaShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(14deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(8deg)}}
+@media(max-width:400px){#kams-alarm .ka-alarm{flex-wrap:wrap}#kams-alarm .ka-ainfo{flex-basis:calc(100% - 70px)}#kams-alarm .ka-time{margin-left:64px}#kams-alarm .ka-alarm .ka-sw{margin-left:auto}}
+</style>
+
+<div class="ka-head">
+  <span data-ic="alarm"></span>
+  <div><h2>ಹಾಜರಾತಿ ಅಲಾರಾಂ</h2><small>KAMS ಹಾಜರಾತಿ ಸ್ಮರಣಿಕೆ</small></div>
+  <button type="button" class="ka-hbtn" data-act="help" aria-label="ಸಹಾಯ"><span data-ic="help"></span></button>
+</div>
+
+<div class="ka-body">
+  <button type="button" class="ka-unlock" id="ka-unlock" data-act="unlock">🔔 ಅಲಾರಾಂ ಧ್ವನಿ ಸಕ್ರಿಯಗೊಳಿಸಲು ಒಮ್ಮೆ ಇಲ್ಲಿ ಒತ್ತಿ</button>
+
+  <div class="ka-card ka-hero">
+    <div><h3>ಶಿಕ್ಷಕರಿಗಾಗಿ</h3><b>ದೈನಂದಿನ ಹಾಜರಾತಿ ಸ್ಮರಣಿಕೆ</b><small>ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಹಾಜರಾತಿ ದಾಖಲಿಸಿ</small></div>
+    <div class="ka-hic"><span data-ic="school"></span></div>
+  </div>
+
+  <div class="ka-card ka-clock">
+    <div class="ka-now" id="ka-now">--:--:--</div>
+    <div class="ka-date" id="ka-date"></div>
+    <div class="ka-next" id="ka-next"></div>
+    <div class="ka-prog"><span id="ka-progt"></span><div class="ka-bar"><i id="ka-progb"></i></div></div>
+  </div>
+
+  <div class="ka-sec"><span data-ic="clock"></span>ದೈನಂದಿನ ಹಾಜರಾತಿ ಸಮಯಗಳು</div>
+  <div id="ka-alarms"></div>
+  <button type="button" class="ka-add" data-act="add"><span data-ic="add"></span>ಹೊಸ ಅಲಾರಾಂ ಸೇರಿಸಿ</button>
+
+  <div class="ka-sec"><span data-ic="music"></span>ಅಲಾರಾಂ ಧ್ವನಿ ಆಯ್ಕೆ</div>
+  <div class="ka-card">
+    <label class="ka-opt"><input type="radio" name="ka-sound" value="voice"><span><b>ಕನ್ನಡ ಧ್ವನಿ ಸ್ಮರಣಿಕೆ</b><small>“ಶಿಕ್ಷಕರೇ, ಹಾಜರಾತಿ ದಾಖಲಿಸಿ”</small></span><em data-ic="voice"></em></label>
+    <label class="ka-opt"><input type="radio" name="ka-sound" value="beep"><span><b>ಸಾಮಾನ್ಯ ಅಲಾರಾಂ ಧ್ವನಿ</b><small>ಸಾಮಾನ್ಯ ಬೀಪ್ ಅಲಾರಾಂ ಧ್ವನಿ</small></span><em data-ic="bell"></em></label>
+    <div class="ka-pv">
+      <button type="button" data-act="preview"><span data-ic="play"></span>Preview</button>
+      <button type="button" data-act="stop"><span data-ic="stop"></span>Stop</button>
+    </div>
+  </div>
+
+  <div class="ka-card ka-vol">
+    <span data-ic="volume"></span><b>ಧ್ವನಿ ಪ್ರಮಾಣ</b>
+    <input type="range" id="ka-vol" min="0" max="100" step="5" aria-label="ಧ್ವನಿ ಪ್ರಮಾಣ">
+    <output id="ka-volv">70%</output>
+  </div>
+
+  <div class="ka-sec"><span data-ic="cal"></span>ಅಲಾರಾಂ ಕಾರ್ಯದಿನಗಳು</div>
+  <div class="ka-card">
+    <div class="ka-days" id="ka-days"></div>
+    <div class="ka-sun">🏖️ ಭಾನುವಾರ – ರಜೆ (ಡೀಫಾಲ್ಟ್ OFF)</div>
+  </div>
+
+  <div class="ka-card ka-sat">
+    <div class="ka-row"><span data-ic="cal"></span><b>ಶನಿವಾರ (ಅರೆ ದಿನ ಶಾಲೆ)</b>
+      <label class="ka-sw"><input type="checkbox" id="ka-sat"><i></i></label></div>
+    <div class="ka-hint">ON ಮಾಡಿದರೆ ಶನಿವಾರ ಮಧ್ಯಾಹ್ನ 1:30ರ ಒಳಗಿನ ಅಲಾರಾಂಗಳು ಮಾತ್ರ ರಿಂಗ್ ಆಗುತ್ತವೆ.</div>
+  </div>
+
+  <div class="ka-card ka-satx">
+    <div class="ka-row"><span data-ic="cal"></span><b>ಶನಿವಾರ – ಹೆಚ್ಚುವರಿ ವೇಳಾಪಟ್ಟಿ</b>
+      <label class="ka-sw"><input type="checkbox" id="ka-satx"><i></i></label></div>
+    <div class="ka-satt">
+      <button type="button" class="ka-time" data-sat="0"><span data-ic="clock"></span><span id="ka-sat0"></span></button> –
+      <button type="button" class="ka-time" data-sat="1"><span data-ic="clock"></span><span id="ka-sat1"></span></button>
+      <span class="ka-hint" style="margin:0">(ಡೀಫಾಲ್ಟ್ OFF)</span>
+    </div>
+  </div>
+
+  <div class="ka-sec"><span data-ic="tune"></span>ಹೆಚ್ಚುವರಿ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</div>
+  <div class="ka-card ka-set">
+    <div class="ka-row"><b>ಸ್ನೂಜ್ ಅವಧಿ</b>
+      <select id="ka-snz"><option value="2">2 ನಿಮಿಷ</option><option value="5">5 ನಿಮಿಷ</option><option value="10">10 ನಿಮಿಷ</option><option value="15">15 ನಿಮಿಷ</option></select></div>
+    <div class="ka-row"><b>ವೈಬ್ರೇಷನ್ (ಮೊಬೈಲ್)</b><label class="ka-sw"><input type="checkbox" id="ka-vib"><i></i></label></div>
+    <div class="ka-row"><b>ಬ್ರೌಸರ್ ನೋಟಿಫಿಕೇಶನ್</b><label class="ka-sw"><input type="checkbox" id="ka-ntf"><i></i></label></div>
+    <div class="ka-row"><b>ಪರದೆ ಆನ್ ಇರಿಸಿ (Screen awake)</b><label class="ka-sw"><input type="checkbox" id="ka-wake"><i></i></label></div>
+    <div class="ka-btns">
+      <button type="button" class="ka-btn ka-b-l" data-act="test">🔔 ಪರೀಕ್ಷಾ ಅಲಾರಾಂ</button>
+      <button type="button" class="ka-btn ka-b-r" data-act="reset">↺ ಡೀಫಾಲ್ಟ್‌ಗೆ ಮರಳಿ</button>
+    </div>
+  </div>
+
+  <p class="ka-note">ಗಮನಿಸಿ: ಅಲಾರಾಂ ರಿಂಗ್ ಆಗಲು ಈ ಪುಟ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆದಿರಬೇಕು.</p>
+</div>
+
+<!-- ಅಲಾರಾಂ ರಿಂಗ್ ಆಗುವ ಪರದೆ -->
+<div class="ka-modal" id="ka-ring" hidden>
+  <div class="ka-mbox ka-ringbox">
+    <div class="ka-bell" data-ic="bell"></div>
+    <div class="ka-rtime" id="ka-rtime"></div>
+    <h3 id="ka-rtitle"></h3>
+    <p id="ka-rsub"></p>
+    <button type="button" class="ka-btn ka-b-g" data-act="done">✔ ಹಾಜರಾತಿ ದಾಖಲಿಸಿದೆ</button>
+    <a class="ka-btn ka-b-p" id="ka-open" target="_blank" rel="noopener" hidden>KAMS ತೆರೆಯಿರಿ ↗</a>
+    <button type="button" class="ka-btn ka-b-l" data-act="snooze" id="ka-snzbtn">ಸ್ನೂಜ್</button>
+    <button type="button" class="ka-btn ka-b-t" data-act="dismiss">ನಿಲ್ಲಿಸಿ</button>
+  </div>
+</div>
+
+<!-- ಸಮಯ ಬದಲಿಸುವ ಪರದೆ -->
+<div class="ka-modal" id="ka-edit" hidden>
+  <div class="ka-mbox">
+    <h3 id="ka-eh">ಅಲಾರಾಂ ಬದಲಿಸಿ</h3>
+    <div id="ka-efull">
+      <label>ಶೀರ್ಷಿಕೆ<input type="text" id="ka-ftitle" maxlength="40"></label>
+      <label>ವಿವರ<input type="text" id="ka-fsub" maxlength="60"></label>
+      <label>ವಿಧ<select id="ka-ftype"><option value="teacher">ಶಿಕ್ಷಕರ ಹಾಜರಾತಿ</option><option value="student">ವಿದ್ಯಾರ್ಥಿಗಳ ಹಾಜರಾತಿ</option></select></label>
+    </div>
+    <label>ಸಮಯ<input type="time" id="ka-ftime"></label>
+    <div class="ka-btns" style="margin-top:18px">
+      <button type="button" class="ka-btn ka-b-r" data-act="del" id="ka-fdel">ಅಳಿಸಿ</button>
+      <button type="button" class="ka-btn ka-b-l" data-act="cancel">ರದ್ದು</button>
+      <button type="button" class="ka-btn ka-b-p" data-act="save">ಉಳಿಸಿ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ಸಹಾಯ -->
+<div class="ka-modal" id="ka-help" hidden>
+  <div class="ka-mbox">
+    <h3>ಬಳಸುವ ವಿಧಾನ</h3>
+    <ul>
+      <li>ಸಮಯದ ಮೇಲೆ ಒತ್ತಿ ಅಲಾರಾಂ ಸಮಯ, ಹೆಸರು ಬದಲಿಸಬಹುದು.</li>
+      <li>ಹಸಿರು ಸ್ವಿಚ್ ಮೂಲಕ ಪ್ರತಿ ಅಲಾರಾಂ ON/OFF ಮಾಡಿ.</li>
+      <li>ಅಲಾರಾಂ ಬಂದಾಗ “ಹಾಜರಾತಿ ದಾಖಲಿಸಿದೆ” ಒತ್ತಿದರೆ ಇಂದಿನ ಪ್ರಗತಿಯಲ್ಲಿ ದಾಖಲಾಗುತ್ತದೆ.</li>
+      <li>ಉತ್ತರಿಸದಿದ್ದರೆ ಅಲಾರಾಂ ತಾನಾಗಿಯೇ ಸ್ನೂಜ್ ಆಗಿ ಮತ್ತೆ ನೆನಪಿಸುತ್ತದೆ (3 ಬಾರಿ).</li>
+      <li>ಎಲ್ಲಾ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲೇ ಉಳಿಯುತ್ತವೆ.</li>
+      <li><b>ಮುಖ್ಯ:</b> ಈ ಪುಟ ತೆರೆದಿರುವಾಗ ಮಾತ್ರ ಅಲಾರಾಂ ಕೆಲಸ ಮಾಡುತ್ತದೆ. ಮೊಬೈಲ್‌ನಲ್ಲಿ “ಪರದೆ ಆನ್ ಇರಿಸಿ” ON ಮಾಡಿ.</li>
+    </ul>
+    <button type="button" class="ka-btn ka-b-p" data-act="closehelp">ಸರಿ</button>
+  </div>
+</div>
+
+<div class="ka-toast" id="ka-toast" hidden></div>
+
+<script>
+(function(){
+'use strict';
+var ROOT=document.getElementById('kams-alarm'); if(!ROOT) return;
+
+/* ====== ನೀವು ಬದಲಿಸಬಹುದಾದ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ====== */
+var KAMS_URL='';              // ಹಾಜರಾತಿ ಪೋರ್ಟಲ್ ಲಿಂಕ್ ಇಲ್ಲಿ ಹಾಕಿದರೆ ಅಲಾರಾಂನಲ್ಲಿ "KAMS ತೆರೆಯಿರಿ" ಬಟನ್ ಬರುತ್ತದೆ
+var SAT_CUTOFF=13*60+30;      // ಅರೆ ದಿನದ ಶನಿವಾರ: ಈ ಸಮಯದ (1:30 PM) ಒಳಗಿನ ಅಲಾರಾಂ ಮಾತ್ರ
+var RING_SECONDS=60;          // ಎಷ್ಟು ಸೆಕೆಂಡ್ ರಿಂಗ್ ಆಗಬೇಕು
+var GRACE=2;                  // ತಡವಾದರೂ ಎಷ್ಟು ನಿಮಿಷದವರೆಗೆ ರಿಂಗ್ ಆಗಬೇಕು
+function defaults(){return{
+  alarms:[
+    {id:'a1',type:'teacher',title:'ಶಿಕ್ಷಕರ KAMS ಹಾಜರಾತಿ',sub:'ಬೆಳಗಿನ ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',time:'09:42',on:true},
+    {id:'a2',type:'student',title:'ವಿದ್ಯಾರ್ಥಿಗಳ ಹಾಜರಾತಿ',sub:'ಬೆಳಗಿನ ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',time:'11:12',on:true},
+    {id:'a3',type:'student',title:'ವಿದ್ಯಾರ್ಥಿಗಳ ಹಾಜರಾತಿ',sub:'ಮಧ್ಯಾಹ್ನದ ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',time:'14:12',on:true},
+    {id:'a4',type:'teacher',title:'ಶಿಕ್ಷಕರ KAMS ಹಾಜರಾತಿ',sub:'ಸಂಜೆಯ ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',time:'16:27',on:true}],
+  sound:'beep',volume:70,days:{1:true,2:true,3:true,4:true,5:true},
+  saturday:false,satExtra:false,satTimes:['09:27','13:27'],
+  snooze:5,vibrate:true,notify:false,wake:false};}
+/* ============================================ */
+
+var IC={
+alarm:'M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z',
+clock:'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z',
+school:'M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z',
+teacher:'M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z',
+group:'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',
+music:'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z',
+volume:'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z',
+cal:'M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z',
+check:'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
+help:'M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z',
+play:'M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z',
+stop:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4-4H8V8h8v8z',
+voice:'M5 9a4 4 0 1 0 8 0a4 4 0 1 0-8 0zM9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm7.76-9.64l-1.68 1.69c.84 1.18.84 2.71 0 3.89l1.68 1.69c2.02-2.02 2.02-5.07 0-7.27zM20.07 2l-1.63 1.63c2.77 3.02 2.77 7.56 0 10.74L20.07 16c3.9-3.89 3.91-9.95 0-14z',
+bell:'M7.58 4.08L6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42zm12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42zM18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2z',
+add:'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z',
+tune:'M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z'};
+function ic(n){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+IC[n]+'"/></svg>';}
+function $(s){return ROOT.querySelector(s);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+Array.prototype.forEach.call(ROOT.querySelectorAll('[data-ic]'),function(e){e.innerHTML=ic(e.getAttribute('data-ic'));});
+
+/* ---------- ಸಂಗ್ರಹ (localStorage) ---------- */
+var KEY='kamsAlarm.v1',RKEY='kamsAlarm.run.v1';
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var S=defaults();(function(){var o=lsGet(KEY);if(o&&typeof o==='object'){for(var k in S){if(o[k]!==undefined&&o[k]!==null)S[k]=o[k];}}})();
+function save(){lsSet(KEY,S);}
+function dkey(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+var R=lsGet(RKEY);if(!R||R.date!==dkey(new Date()))R={date:dkey(new Date()),fired:[],done:[]};
+function saveR(){lsSet(RKEY,R);}
+
+/* ---------- ಸಹಾಯಕ ಫಂಕ್ಷನ್‌ಗಳು ---------- */
+var DAYS=['ಭಾನುವಾರ','ಸೋಮವಾರ','ಮಂಗಳವಾರ','ಬುಧವಾರ','ಗುರುವಾರ','ಶುಕ್ರವಾರ','ಶನಿವಾರ'];
+var DSHORT={1:'ಸೋಮ',2:'ಮಂಗಳ',3:'ಬುಧ',4:'ಗುರು',5:'ಶುಕ್ರ'};
+var PAL=['#e9e4fb','#ffe9cc','#dff0fb','#e3f3e6'];
+function toMin(t){var p=t.split(':');return (+p[0])*60+(+p[1]);}
+function fmt(t){var p=t.split(':'),h=+p[0];return (h%12||12)+':'+p[1]+' '+(h>=12?'PM':'AM');}
+function p2(n){return (n<10?'0':'')+n;}
+var toastT;function toast(m){var t=$('#ka-toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true;},3500);}
+
+function alarmsForDay(dow){
+  var list=[];
+  function add(a){list.push({id:a.id,time:a.time,title:a.title,sub:a.sub,type:a.type});}
+  if(dow>=1&&dow<=5){if(S.days[dow])S.alarms.forEach(function(a){if(a.on)add(a);});}
+  else if(dow===6){
+    if(S.saturday)S.alarms.forEach(function(a){if(a.on&&toMin(a.time)<SAT_CUTOFF)add(a);});
+    if(S.satExtra)S.satTimes.forEach(function(t,i){add({id:'sat'+i,time:t,title:'ಶನಿವಾರದ ಹಾಜರಾತಿ',sub:(i===0?'ಬೆಳಗಿನ':'ಮಧ್ಯಾಹ್ನದ')+' ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',type:'teacher'});});
+  }
+  list.sort(function(x,y){return toMin(x.time)-toMin(y.time);});
+  return list;
+}
+function nextAlarm(now){
+  var nm=now.getHours()*60+now.getMinutes();
+  for(var d=0;d<8;d++){
+    var dt=new Date(now.getFullYear(),now.getMonth(),now.getDate()+d),l=alarmsForDay(dt.getDay());
+    for(var i=0;i<l.length;i++){var m=toMin(l[i].time);
+      if(d>0||m>nm){dt.setHours(Math.floor(m/60),m%60,0,0);return{a:l[i],at:dt,d:d};}}
+  }
+  return null;
+}
+
+/* ---------- ಪರದೆ ರಚನೆ ---------- */
+function renderAlarms(){
+  var h='';
+  S.alarms.forEach(function(a,i){
+    var done=R.done.indexOf(a.id)>=0;
+    h+='<div class="ka-card ka-alarm'+(a.on?'':' ka-off')+'">'+
+      '<div class="ka-av" style="background:'+PAL[i%4]+'">'+ic(a.type==='student'?'group':'teacher')+'</div>'+
+      '<div class="ka-ainfo"><b>'+esc(a.title)+'</b><small>'+esc(a.sub)+'</small>'+
+      (done?'<br><span class="ka-done">'+ic('check')+'ಇಂದು ದಾಖಲಿಸಿದೆ</span>':'')+'</div>'+
+      '<button type="button" class="ka-time" data-edit="'+a.id+'">'+ic('clock')+'<span>'+fmt(a.time)+'</span></button>'+
+      '<label class="ka-sw"><input type="checkbox" data-toggle="'+a.id+'"'+(a.on?' checked':'')+'><i></i></label></div>';
+  });
+  $('#ka-alarms').innerHTML=h;
+}
+function renderDays(){
+  var h='';for(var d=1;d<=5;d++)h+='<button type="button" class="ka-day'+(S.days[d]?' on':'')+'" data-day="'+d+'">'+ic('check')+DSHORT[d]+'</button>';
+  $('#ka-days').innerHTML=h;
+}
+function renderControls(){
+  var r=ROOT.querySelector('input[name="ka-sound"][value="'+S.sound+'"]');if(r)r.checked=true;
+  $('#ka-vol').value=S.volume;$('#ka-volv').textContent=S.volume+'%';
+  $('#ka-sat').checked=S.saturday;$('#ka-satx').checked=S.satExtra;
+  $('#ka-sat0').textContent=fmt(S.satTimes[0]);$('#ka-sat1').textContent=fmt(S.satTimes[1]);
+  $('#ka-snz').value=String(S.snooze);$('#ka-vib').checked=S.vibrate;$('#ka-ntf').checked=S.notify;$('#ka-wake').checked=S.wake;
+}
+function renderAll(){renderAlarms();renderDays();renderControls();updateInfo(new Date());}
+
+function updateInfo(now){
+  var h=now.getHours();
+  $('#ka-now').textContent=(h%12||12)+':'+p2(now.getMinutes())+':'+p2(now.getSeconds())+' '+(h>=12?'PM':'AM');
+  var ds;try{ds=now.toLocaleDateString('kn-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}catch(e){ds=DAYS[now.getDay()]+', '+now.toLocaleDateString();}
+  $('#ka-date').textContent=ds;
+  var n=nextAlarm(now),el=$('#ka-next');
+  if(!n){el.innerHTML='ಯಾವುದೇ ಅಲಾರಾಂ ಸಕ್ರಿಯವಾಗಿಲ್ಲ';}
+  else{
+    var s=Math.max(0,Math.round((n.at-now)/1000)),hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;
+    var left=hh>0?(hh+' ಗಂ '+mm+' ನಿ'):(mm>0?(mm+' ನಿ '+ss+' ಸೆ'):(ss+' ಸೆ'));
+    var day=n.d===0?'ಇಂದು':(n.d===1?'ನಾಳೆ':DAYS[n.at.getDay()]);
+    el.innerHTML='ಮುಂದಿನ ಅಲಾರಾಂ: <b>'+day+' '+fmt(n.a.time)+'</b><br>'+esc(n.a.title)+' · ಇನ್ನೂ '+left;
+  }
+  var l=alarmsForDay(now.getDay()),dn=0;l.forEach(function(a){if(R.done.indexOf(a.id)>=0)dn++;});
+  $('#ka-progt').textContent=l.length?('ಇಂದಿನ ಪ್ರಗತಿ: '+dn+' / '+l.length+' ಹಾಜರಾತಿ ದಾಖಲಿಸಿದೆ'):'ಇಂದು ಅಲಾರಾಂ ಇಲ್ಲ (ರಜೆ / OFF)';
+  $('#ka-progb').style.width=(l.length?Math.round(dn*100/l.length):0)+'%';
+}
+
+/* ---------- ಧ್ವನಿ ---------- */
+var AC=null,master=null,sT=null,sT2=null,vT=null;
+function ensureAudio(){
+  try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(C){AC=new C();master=AC.createGain();master.connect(AC.destination);}}
+    if(AC&&AC.state==='suspended')AC.resume();}catch(e){}
+  if(master)master.gain.value=S.volume/100;
+}
+function tone(freq,start,dur,type){
+  if(!AC)return;var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+start;
+  o.type=type||'square';o.frequency.value=freq;
+  g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.9,t+0.015);g.gain.setValueAtTime(0.9,t+dur-0.03);g.gain.linearRampToValueAtTime(0.0001,t+dur);
+  o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.02);
+}
+function beeps(){for(var i=0;i<4;i++)tone(i%2?1245:988,i*0.17,0.12,'square');}
+function chime(){tone(880,0,0.25,'sine');tone(1175,0.22,0.4,'sine');}
+function knVoice(){try{var v=speechSynthesis.getVoices();for(var i=0;i<v.length;i++)if(/^kn/i.test(v[i].lang))return v[i];return v.length?false:null;}catch(e){return null;}}
+function speak(txt){try{var u=new SpeechSynthesisUtterance(txt);u.lang='kn-IN';u.rate=0.95;u.volume=S.volume/100;var v=knVoice();if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function voiceText(a){return a?('ಶಿಕ್ಷಕರೇ, '+a.title.replace(/KAMS/gi,'ಕ್ಯಾಮ್ಸ್')+' ದಾಖಲಿಸಿ'):'ಶಿಕ್ಷಕರೇ, ಹಾಜರಾತಿ ದಾಖಲಿಸಿ';}
+function startSound(a,vib){
+  stopSound();ensureAudio();
+  var mode=S.sound;
+  if(mode==='voice'&&(!('speechSynthesis' in window)||knVoice()===false)){mode='beep';toast('ಕನ್ನಡ ಧ್ವನಿ ಈ ಸಾಧನದಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ – ಸಾಮಾನ್ಯ ಧ್ವನಿ ಬಳಸಲಾಗಿದೆ');}
+  if(mode==='voice'){var txt=voiceText(a),f=function(){chime();sT2=setTimeout(function(){speak(txt);},800);};f();sT=setInterval(f,7000);}
+  else{beeps();sT=setInterval(beeps,1100);}
+  if(vib&&S.vibrate&&navigator.vibrate){var vf=function(){try{navigator.vibrate([600,300,600,300,600]);}catch(e){}};vf();vT=setInterval(vf,3000);}
+}
+function stopSound(){
+  clearInterval(sT);clearTimeout(sT2);clearInterval(vT);sT=sT2=vT=null;
+  try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate(0);}catch(e){}
+}
+var pvT=null;
+function preview(){clearTimeout(pvT);startSound(null,false);pvT=setTimeout(stopSound,7500);}
+
+/* ---------- ಅಲಾರಾಂ ರಿಂಗ್ ---------- */
+var cur=null,ringT=null,blinkT=null,snz=null,oldTitle=document.title;
+function startRing(a){
+  cur=a;clearTimeout(pvT);
+  $('#ka-rtime').textContent=fmt(a.time);$('#ka-rtitle').textContent=a.title;$('#ka-rsub').textContent=a.sub;
+  $('#ka-snzbtn').textContent='ಸ್ನೂಜ್ ('+S.snooze+' ನಿಮಿಷ)';
+  var op=$('#ka-open');if(KAMS_URL){op.href=KAMS_URL;op.hidden=false;}else op.hidden=true;
+  $('#ka-ring').hidden=false;
+  startSound(a,true);
+  var b=false;clearInterval(blinkT);blinkT=setInterval(function(){b=!b;document.title=b?'🔔 ಹಾಜರಾತಿ ದಾಖಲಿಸಿ!':oldTitle;},900);
+  if(S.notify&&'Notification' in window&&Notification.permission==='granted'){
+    try{var n=new Notification('🔔 '+a.title,{body:a.sub+' ('+fmt(a.time)+')',tag:'kams-'+a.id,requireInteraction:true});n.onclick=function(){window.focus();n.close();};}catch(e){}
+  }
+  clearTimeout(ringT);ringT=setTimeout(function(){if((cur._sn||0)<3)endRing('snooze');else endRing('dismiss');},RING_SECONDS*1000);
+}
+function endRing(how){
+  if(!cur)return;var a=cur;cur=null;
+  stopSound();clearTimeout(ringT);clearInterval(blinkT);document.title=oldTitle;$('#ka-ring').hidden=true;
+  if(how==='done'&&!a.test){if(R.done.indexOf(a.id)<0)R.done.push(a.id);saveR();renderAlarms();toast('ಧನ್ಯವಾದಗಳು! ಹಾಜರಾತಿ ದಾಖಲಾಗಿದೆ ✔');}
+  if(how==='snooze'){a._sn=(a._sn||0)+1;snz={a:a,at:Date.now()+S.snooze*60000};toast(S.snooze+' ನಿಮಿಷದ ನಂತರ ಮತ್ತೆ ನೆನಪಿಸುತ್ತೇನೆ');}
+  updateInfo(new Date());
+}
+function tick(){
+  var now=new Date(),k=dkey(now);
+  if(R.date!==k){R={date:k,fired:[],done:[]};saveR();renderAlarms();}
+  if(!cur){
+    var nm=now.getHours()*60+now.getMinutes(),l=alarmsForDay(now.getDay());
+    for(var i=0;i<l.length;i++){var m=toMin(l[i].time),fk=l[i].id+'@'+l[i].time;
+      if(nm>=m&&nm-m<=GRACE&&R.fired.indexOf(fk)<0){R.fired.push(fk);saveR();startRing(l[i]);break;}}
+    if(!cur&&snz&&Date.now()>=snz.at){var a=snz.a;snz=null;startRing(a);}
+  }
+  updateInfo(now);
+}
+
+/* ---------- ಎಡಿಟ್ ---------- */
+var ctx=null;
+function openEdit(c){
+  ctx=c;var full=c.kind!=='sat';$('#ka-efull').hidden=!full;$('#ka-fdel').hidden=c.kind!=='alarm';
+  if(c.kind==='sat'){$('#ka-eh').textContent='ಶನಿವಾರದ ಸಮಯ ಬದಲಿಸಿ';$('#ka-ftime').value=S.satTimes[c.idx];}
+  else if(c.kind==='new'){$('#ka-eh').textContent='ಹೊಸ ಅಲಾರಾಂ';$('#ka-ftitle').value='';$('#ka-fsub').value='';$('#ka-ftype').value='teacher';$('#ka-ftime').value='10:00';}
+  else{var a=S.alarms.filter(function(x){return x.id===c.id;})[0];if(!a)return;
+    $('#ka-eh').textContent='ಅಲಾರಾಂ ಬದಲಿಸಿ';$('#ka-ftitle').value=a.title;$('#ka-fsub').value=a.sub;$('#ka-ftype').value=a.type;$('#ka-ftime').value=a.time;}
+  $('#ka-edit').hidden=false;
+}
+function saveEdit(){
+  var t=$('#ka-ftime').value;if(!/^\d{2}:\d{2}/.test(t)){toast('ದಯವಿಟ್ಟು ಸಮಯ ಆಯ್ಕೆ ಮಾಡಿ');return;}t=t.slice(0,5);
+  if(ctx.kind==='sat'){S.satTimes[ctx.idx]=t;}
+  else{
+    var title=$('#ka-ftitle').value.trim()||'ಹಾಜರಾತಿ ಸ್ಮರಣಿಕೆ',sub=$('#ka-fsub').value.trim()||'ಹಾಜರಾತಿ ದಾಖಲಿಸಿ',type=$('#ka-ftype').value;
+    if(ctx.kind==='new')S.alarms.push({id:'c'+Date.now(),type:type,title:title,sub:sub,time:t,on:true});
+    else S.alarms.forEach(function(a){if(a.id===ctx.id){a.title=title;a.sub=sub;a.type=type;a.time=t;}});
+    S.alarms.sort(function(x,y){return toMin(x.time)-toMin(y.time);});
+  }
+  save();$('#ka-edit').hidden=true;renderAll();toast('ಉಳಿಸಲಾಗಿದೆ ✔');
+}
+
+/* ---------- ಪರದೆ ಆನ್ (Wake Lock) ---------- */
+var wl=null;
+function setWake(on){
+  if(!('wakeLock' in navigator)){if(on)toast('ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಈ ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ');return false;}
+  if(on){navigator.wakeLock.request('screen').then(function(l){wl=l;}).catch(function(){});}
+  else if(wl){try{wl.release();}catch(e){}wl=null;}
+  return true;
+}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){if(S.wake)setWake(true);tick();}});
+
+/* ---------- ಧ್ವನಿ ಅನ್‌ಲಾಕ್ (ಮೊದಲ ಟಚ್) ---------- */
+function unlock(){
+  ensureAudio();
+  try{if('speechSynthesis' in window){var u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);}}catch(e){}
+  $('#ka-unlock').hidden=true;
+  document.removeEventListener('pointerdown',unlock);document.removeEventListener('keydown',unlock);
+}
+document.addEventListener('pointerdown',unlock);document.addEventListener('keydown',unlock);
+try{if('speechSynthesis' in window)speechSynthesis.getVoices();}catch(e){}
+
+/* ---------- ಈವೆಂಟ್‌ಗಳು ---------- */
+ROOT.addEventListener('click',function(e){
+  var t=e.target.closest?e.target.closest('[data-edit],[data-day],[data-sat],[data-act]'):null;if(!t)return;
+  if(t.hasAttribute('data-edit')){openEdit({kind:'alarm',id:t.getAttribute('data-edit')});return;}
+  if(t.hasAttribute('data-sat')){openEdit({kind:'sat',idx:+t.getAttribute('data-sat')});return;}
+  if(t.hasAttribute('data-day')){var d=t.getAttribute('data-day');S.days[d]=!S.days[d];save();renderDays();updateInfo(new Date());return;}
+  switch(t.getAttribute('data-act')){
+    case 'help':$('#ka-help').hidden=false;break;
+    case 'closehelp':$('#ka-help').hidden=true;break;
+    case 'unlock':unlock();toast('ಅಲಾರಾಂ ಧ್ವನಿ ಸಕ್ರಿಯವಾಗಿದೆ ✔');break;
+    case 'add':openEdit({kind:'new'});break;
+    case 'preview':preview();break;
+    case 'stop':clearTimeout(pvT);stopSound();break;
+    case 'save':saveEdit();break;
+    case 'cancel':$('#ka-edit').hidden=true;break;
+    case 'del':if(confirm('ಈ ಅಲಾರಾಂ ಅಳಿಸಬೇಕೆ?')){S.alarms=S.alarms.filter(function(a){return a.id!==ctx.id;});save();$('#ka-edit').hidden=true;renderAll();}break;
+    case 'done':endRing('done');break;
+    case 'snooze':endRing('snooze');break;
+    case 'dismiss':endRing('dismiss');break;
+    case 'test':var n=new Date();startRing({id:'test',test:true,time:p2(n.getHours())+':'+p2(n.getMinutes()),title:'ಪರೀಕ್ಷಾ ಅಲಾರಾಂ',sub:'ಇದು ಕೇವಲ ಪರೀಕ್ಷೆ – ಅಲಾರಾಂ ಹೀಗೆ ಬರುತ್ತದೆ',type:'teacher',_sn:3});break;
+    case 'reset':if(confirm('ಎಲ್ಲಾ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಡೀಫಾಲ್ಟ್‌ಗೆ ಮರಳಿಸಬೇಕೆ?')){setWake(false);S=defaults();save();renderAll();toast('ಡೀಫಾಲ್ಟ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಮರಳಿವೆ');}break;
+  }
+});
+ROOT.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.hasAttribute('data-toggle')){var id=t.getAttribute('data-toggle');S.alarms.forEach(function(a){if(a.id===id)a.on=t.checked;});save();renderAlarms();updateInfo(new Date());return;}
+  if(t.name==='ka-sound'){S.sound=t.value;save();return;}
+  switch(t.id){
+    case 'ka-sat':S.saturday=t.checked;break;
+    case 'ka-satx':S.satExtra=t.checked;break;
+    case 'ka-snz':S.snooze=+t.value;break;
+    case 'ka-vib':S.vibrate=t.checked;break;
+    case 'ka-wake':S.wake=t.checked&&setWake(true);if(!t.checked)setWake(false);t.checked=!!S.wake;break;
+    case 'ka-ntf':
+      if(t.checked){
+        if(!('Notification' in window)){toast('ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ನೋಟಿಫಿಕೇಶನ್ ಲಭ್ಯವಿಲ್ಲ');t.checked=false;S.notify=false;}
+        else{S.notify=true;try{var pr=Notification.requestPermission(function(){});
+          if(pr&&pr.then)pr.then(function(p){if(p!=='granted'){S.notify=false;t.checked=false;save();toast('ನೋಟಿಫಿಕೇಶನ್ ಅನುಮತಿ ನೀಡಿಲ್ಲ');}});}catch(err){}}
+      }else S.notify=false;break;
+    default:return;
+  }
+  save();updateInfo(new Date());
+});
+$('#ka-vol').addEventListener('input',function(){S.volume=+this.value;$('#ka-volv').textContent=S.volume+'%';if(master)master.gain.value=S.volume/100;save();});
+
+/* ---------- ಪ್ರಾರಂಭ ---------- */
+if(S.notify&&(!('Notification' in window)||Notification.permission!=='granted'))S.notify=false;
+renderAll();
+if(S.wake)setWake(true);
+setInterval(tick,1000);tick();
+})();
+</script>
+</div>
+<!-- ===== KAMS ಹಾಜರಾತಿ ಅಲಾರಾಂ : END ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@media print{
+  .no-print{
+    display:none !important;
+  }
+}
+</style>
+
+<div class="no-print" style="text-align:center;margin:15px 0;">
+  <a href="https://bilingualmediumschools.blogspot.com/2026/04/home-page.html"
+     target="_blank"
+     style="display:inline-block;
+            background:#1565c0;
+            color:#fff;
+            text-decoration:none;
+            padding:10px 18px;
+            border-radius:8px;
+            font-weight:bold;
+            font-size:16px;">
+<br> ರಚನೆ: ಮನೋಹರ್ ಆರ್‌<br>
+    🌐 School Resource Centre – Click Here to Visit
+  </a>
+</div>
+
+
+
+
+
